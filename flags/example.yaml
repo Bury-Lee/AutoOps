@@ -1,0 +1,82 @@
+run_mode: "develop" # 运行模式: develop, release
+
+log:
+  app: "AutoOps" # 服务名称
+  dir: "logs" # 日志存储目录
+  log_level: "debug" # 日志级别: debug, info, warn, error
+
+db:
+  sql_name: "sqlite" # 数据库类型: mysql, postgresql, sqlite
+  db_name: "autoops.db" # 数据库名称或文件路径
+  host: "127.0.0.1" # 数据库地址
+  port: 3306 # 数据库端口
+  user: "root" # 数据库用户
+  password: "password" # 数据库密码
+
+ai_db:
+  sql_name: "sqlite" # 数据库类型: mysql, postgresql, sqlite
+  db_name: "autoops.db" # 数据库名称或文件路径
+  host: "127.0.0.1" # 数据库地址
+  port: 3306 # 数据库端口
+  user: "root" # 数据库用户
+  password: "password" # 数据库密码
+
+terminal_log:
+  app: "my-service"           # 来自哪个服务
+  max_size: 1024              # 单条日志截断长度（字节）
+  truncate: "..."             # 截断标记（新增字段，对应结构体中的 Truncate）
+  prefix: "Normal"            # 日志前缀，默认INFO
+  buffer_size: 8192           # 缓冲区大小（字节）
+
+  alert_level:                # 触发警报的等级，默认ERROR
+    # - "ERROR"
+    # - "FATAL"
+    # - "PANIC"
+
+  # level 字段从 map 改为数组，每个元素包含 level 和 pattern
+  level:
+    - level: "DEBUG"
+      pattern: ".*\\[DEBUG\\].*"
+    - level: "INFO"
+      pattern: ".*\\[INFO\\].*"
+    - level: "WARN"
+      pattern: ".*\\[WARN\\].*"
+    - level: "ERROR"
+      pattern: ".*\\[ERROR\\].*"
+    - level: "FATAL"
+      pattern: ".*\\[FATAL\\].*"
+    - level: "PANIC"
+      pattern: ".*\\[PANIC\\].*"
+
+analys_ai:
+  model: "qwen/qwen3.5-9b" # AI模型名称, 为local时使用本地模型
+  temperature: 0.7 # 温度参数
+  max_tokens: 0 # 最大令牌数
+  host: "http://localhost:1234/v1" # api地址
+  ApiKey: "your-api-key-here" # AI密钥
+  apiType: "openai" # API类型: openai
+
+# agent_ai:
+#   model: "qwen/qwen3.5-9b" # AI模型名称, 为local时使用本地模型
+#   temperature: 0.7 # 温度参数
+#   max_tokens: 2000 # 最大令牌数
+#   host: "http://localhost:1234/v1" # api地址
+#   ApiKey: "your-api-key-here" # AI密钥
+#   apiType: "openai" # API类型: openai
+
+agent_ai:
+  model: "deepseek-v4-pro" # AI模型名称, 为local时使用本地模型
+  temperature: 0.7 # 温度参数
+  max_tokens: 0 # 最大令牌数
+  host: "https://api.deepseek.com" # api地址
+  ApiKey: "sk-981d6ac3c35b4a23af064ebf34b81d60" # AI密钥
+  apiType: "openai" # API类型: openai
+
+Call_Command: "" # 调用人工介入服务的命令
+
+system:
+#注:和Cmod,Tmod互斥,不能同时使用!
+  ip: "127.0.0.1" # 监控服务IP
+  port: "8080" # 监控服务端口
+  allow_rpg: false # 是否允许远程调用, 建议关闭,除非自行添加鉴权中间件和安全隔离
+  allow_remote: false # 是否允许远程查看日志
