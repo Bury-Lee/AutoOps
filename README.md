@@ -110,7 +110,7 @@ flowchart TB
 ### 构建
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/Bury-Lee/AutoOps
 cd AutoOps
 go build -o AutoOps .
 ```
